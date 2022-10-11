@@ -1,5 +1,11 @@
 # satori-html
 
+## 0.1.0
+
+### Minor Changes
+
+- [`c64fc25`](https://github.com/natemoo-re/satori-html/commit/c64fc257c6c726d81a500e6735bd70fe8a4f2f9a) - Update `html` to be synchronous
+
 ## 0.0.2
 
 ### Patch Changes
