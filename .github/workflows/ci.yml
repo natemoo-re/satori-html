@@ -39,7 +39,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpx changeset publish
+          publish: pnpm changeset publish
           commit: "chore: release"
           title: "chore: release"
         env:
