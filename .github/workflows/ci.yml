@@ -1,5 +1,9 @@
 name: CI
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: ["main"]
@@ -29,3 +33,15 @@ jobs:
       - run: pnpm install
       - run: pnpm build
       - run: pnpm test
+
+      - name: Create Release Pull Request or Publish
+        if: github.event_name == 'push'
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpx changeset publish
+          commit: "chore: release"
+          title: "chore: release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
