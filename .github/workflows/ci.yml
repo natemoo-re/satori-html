@@ -31,11 +31,26 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm build
       - run: pnpm test
 
+  publish:
+    name: Publish
+    needs: [test]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use pnpm
+        run: corepack enable pnpm && pnpm --version
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm run build
       - name: Create Release Pull Request or Publish
-        if: github.event_name == 'push'
         id: changesets
         uses: changesets/action@v1
         with:
