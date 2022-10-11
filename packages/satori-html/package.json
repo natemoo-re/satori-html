@@ -1,0 +1,44 @@
+{
+  "name": "satori-html",
+  "type": "module",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natemoo-re/satori-html"
+  },
+  "bugs": {
+    "url": "https://github.com/natemoo-re/satori-html/issues"
+  },
+  "homepage": "https://github.com/natemoo-re/satori-html#README",
+  "scripts": {
+    "dev": "tsc -p . -w",
+    "build": "tsc -p .",
+    "test": "vitest"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "types": "./index.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "author": {
+    "name": "Nate Moore",
+    "email": "nate@natemoo.re",
+    "url": "https://twitter.com/n_moore"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ultrahtml": "^0.1.1"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.1.0",
+    "@types/node": "^18.8.4",
+    "jest-image-snapshot": "^5.2.0",
+    "satori": "^0.0.38",
+    "vite": "^3.1.7",
+    "vitest": "^0.24.1"
+  }
+}
