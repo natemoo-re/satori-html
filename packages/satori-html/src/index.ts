@@ -37,7 +37,7 @@ const cssToObject = (str: string) => {
     }
   }
   const [decl = "", value = ""] = pair;
-  if (decl && value) {
+  if (decl.trim() && value.trim()) {
     obj[camelize(decl.trim())] = value.trim();
   }
 
@@ -78,7 +78,7 @@ export async function html(
       nodeMap.set(node, root);
     } else if (node.type === ELEMENT_NODE) {
       newNode.type = node.name;
-      const { style, ...props } = node.attributes;
+      const { style, "": _, ...props } = node.attributes;
       if (typeof style === "string") {
         props["style"] = cssToObject(style);
       }
@@ -90,7 +90,7 @@ export async function html(
         newParent.props.children[index] = newNode;
       }
     } else if (node.type === TEXT_NODE) {
-      newNode = node.value;
+      newNode = node.value.trim();
       if (newNode.trim()) {
         if (parent) {
           const newParent = nodeMap.get(parent);

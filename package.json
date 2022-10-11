@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter demo run dev",
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
     "lint": "prettier \"**/*.{js,ts,md,json}\"",
     "format": "pnpm -w run lint --write"
   },
@@ -28,5 +29,12 @@
   },
   "devDependencies": {
     "prettier": "^2.5.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "jest"
+      ]
+    }
   }
 }
