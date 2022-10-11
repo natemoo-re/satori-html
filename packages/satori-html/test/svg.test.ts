@@ -10,7 +10,7 @@ describe("svg", () => {
   });
 
   it("should handle basic html", async () => {
-    const result = await satori(await html`<div>Hello world</div>`, {
+    const result = await satori(html`<div>Hello world</div>`, {
       width: 100,
       height: 100,
       fonts,
@@ -20,7 +20,7 @@ describe("svg", () => {
 
   it("should handle basic css", async () => {
     const result = await satori(
-      await html`<div style="color: red">Hello world</div>`,
+      html`<div style="color: red">Hello world</div>`,
       {
         width: 100,
         height: 100,

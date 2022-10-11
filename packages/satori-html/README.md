@@ -21,7 +21,7 @@ Unfortunately, it is built on top of React's JSX and [expects "React-elements-li
 import satori from "satori";
 import { html } from "satori-html";
 
-const markup = await html`<div style="color: black;">hello, world</div>`;
+const markup = html`<div style="color: black;">hello, world</div>`;
 // See https://github.com/vercel/satori#documentation
 const svg = await satori(markup, {
   width: 600,
@@ -34,7 +34,7 @@ The `html` utility can be used as a tagged template literal or as a function.
 
 ```js
 // Tagged Template Literal
-const tagged = await html`<div style="color: ${color};">hello, world</div>`;
+const tagged = html`<div style="color: ${color};">hello, world</div>`;
 // Function
-const fn = await html('<div style="color: black;">hello, world</div>');
+const fn = html('<div style="color: black;">hello, world</div>');
 ```

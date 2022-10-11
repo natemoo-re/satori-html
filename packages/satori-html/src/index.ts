@@ -1,7 +1,7 @@
 import {
   parse,
   html as __html,
-  walk,
+  walkSync,
   ELEMENT_NODE,
   DOCUMENT_NODE,
   TEXT_NODE,
@@ -52,10 +52,10 @@ interface VNode {
     [prop: string]: any;
   };
 }
-export async function html(
+export function html(
   templates: string | TemplateStringsArray,
   ...expressions: any[]
-): Promise<VNode> {
+): VNode {
   const result = __html.call(null, templates, ...expressions);
   const doc = parse(result.value.trim());
 
@@ -72,7 +72,7 @@ export async function html(
       children: [],
     },
   };
-  await walk(doc, (node, parent, index) => {
+  walkSync(doc, (node, parent, index) => {
     let newNode: any = {};
     if (node.type === DOCUMENT_NODE) {
       nodeMap.set(node, root);

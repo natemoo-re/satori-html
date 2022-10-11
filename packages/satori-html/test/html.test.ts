@@ -16,7 +16,7 @@ const wrap = (...children: any[]) => ({
 
 describe("html", () => {
   it("works as a simple tagged template", async () => {
-    const result = await html`<div>Hello world</div>`;
+    const result = html`<div>Hello world</div>`;
     expect(result).toEqual(
       wrap({
         type: "div",
@@ -28,7 +28,7 @@ describe("html", () => {
   });
 
   it("works as a complex tagged template", async () => {
-    const result = await html`<div>Hello ${"world"}</div>`;
+    const result = html`<div>Hello ${"world"}</div>`;
     expect(result).toEqual(
       wrap({
         type: "div",
@@ -40,7 +40,7 @@ describe("html", () => {
   });
 
   it("works as a function", async () => {
-    const result = await html(`<div>Hello world</div>`);
+    const result = html(`<div>Hello world</div>`);
     expect(result).toEqual(
       wrap({
         type: "div",
@@ -52,7 +52,7 @@ describe("html", () => {
   });
 
   it("should handle basic styles", async () => {
-    const result = await html`<div
+    const result = html`<div
       style="color: red; border-top: 1px solid green;"
     >
       Hello world
@@ -72,7 +72,7 @@ describe("html", () => {
   });
 
   it("should handle basic css", async () => {
-    const result = await html`<div class="cool">Hello world</div>`;
+    const result = html`<div class="cool">Hello world</div>`;
     expect(result).toEqual(
       wrap({
         type: "div",
