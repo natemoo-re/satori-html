@@ -1,5 +1,18 @@
 # satori-html
 
+## 0.2.0
+
+### Minor Changes
+
+- [`28fb172`](https://github.com/natemoo-re/satori-html/commit/28fb1726028820605a1ec406edf5a16aa1aef718) - **NEW** Automatically inline `style` tags directly to matching elements.
+
+  ```diff
+    import { html } from 'satori-html';
+
+  - const markup = html`<div style="color:red">Hello world</div>`;
+  + const markup = html`<div>Hello world</div><style>div { color: red; }</style>`
+  ```
+
 ## 0.1.0
 
 ### Minor Changes
