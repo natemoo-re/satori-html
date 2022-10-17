@@ -83,9 +83,9 @@ export function html(
       newNode.type = node.name;
       const { style, "": _, ...props } = node.attributes;
       if (typeof style === "string") {
-        props["style"] = cssToObject(style);
+        props["style"] = cssToObject(style) as any;
       }
-      props.children = [];
+      props.children = [] as unknown as string;
       Object.assign(newNode, { props });
       nodeMap.set(node, newNode);
       if (parent) {
