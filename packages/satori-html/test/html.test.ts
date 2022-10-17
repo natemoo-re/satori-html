@@ -71,13 +71,16 @@ describe("html", () => {
     );
   });
 
-  it("should handle basic css", async () => {
-    const result = html`<div class="cool">Hello world</div>`;
+  it("inlines css", async () => {
+    const result = html`<div class="cool">Hello world</div><style>.cool { color: red; }</style>`;
     expect(result).toEqual(
       wrap({
         type: "div",
         props: {
-          class: "cool",
+          style: {
+            color: 'red'
+          },
+          class: 'cool',
           children: "Hello world",
         },
       })

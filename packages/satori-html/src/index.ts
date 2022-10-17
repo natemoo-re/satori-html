@@ -6,7 +6,9 @@ import {
   DOCUMENT_NODE,
   TEXT_NODE,
 } from "ultrahtml";
+import inlineCSS from 'ultrahtml/transformers/inline';
 
+const inliner = inlineCSS();
 const camelize = (ident: string) =>
   ident.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 const cssToObject = (str: string) => {
@@ -57,7 +59,8 @@ export function html(
   ...expressions: any[]
 ): VNode {
   const result = __html.call(null, templates, ...expressions);
-  const doc = parse(result.value.trim());
+  let doc = parse(result.value.trim());
+  inliner(doc);
 
   const nodeMap = new WeakMap();
   let root: VNode = {
