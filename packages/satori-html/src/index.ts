@@ -51,7 +51,9 @@ const tw = (doc: DoctypeNode) => {
         if (match) break;
         for (const item of classNames) {
           if (match) break;
-          if (typeof name === 'string') {
+          if (item.indexOf(':') > -1) {
+            match = true
+          } else if (typeof name === 'string') {
             match = item.startsWith(name)
           } else {
             match = name.test(item)
