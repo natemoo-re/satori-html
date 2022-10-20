@@ -5,10 +5,65 @@ import {
   ELEMENT_NODE,
   DOCUMENT_NODE,
   TEXT_NODE,
+  DoctypeNode,
 } from "ultrahtml";
-import inlineCSS from 'ultrahtml/transformers/inline';
+import inlineCSS from "ultrahtml/transformers/inline";
 
+
+const TW_NAMES = new Set([
+  /[mp](t|b|r|l|x|y)?-/,
+  `color-`,
+  `flex`,
+  `h-`,
+  `w-`,
+  `min-w-`,
+  `min-h-`,
+  `max-w-`,
+  `max-h-`,
+  `leading-`,
+  `text-`,
+  `opacity-`,
+  `font-`,
+  `aspect-`,
+  `tint-`,
+  `bg-`,
+  `opacity-`,
+  `shadow-`,
+  `rounded`,
+  `top-`,
+  `right-`,
+  `bottom-`,
+  `left-`,
+  `inset-`,
+  `border`,
+  `elevation-`,
+  `tracking-`,
+  `z-`,
+]);
 const inliner = inlineCSS();
+const tw = (doc: DoctypeNode) => {
+  walkSync(doc, (node) => {
+    if (node.type !== ELEMENT_NODE) return;
+    if (node.attributes.class && !node.attributes.tw) {
+      const classNames = node.attributes.class.split(/\s+/);
+      let match = false;
+      for (const name of TW_NAMES) {
+        if (match) break;
+        for (const item of classNames) {
+          if (match) break;
+          if (typeof name === 'string') {
+            match = item.startsWith(name)
+          } else {
+            match = name.test(item)
+          }
+        }
+      }
+      if (match) {
+        node.attributes.tw = node.attributes.class;
+      }
+    }
+  });
+}
 const camelize = (ident: string) =>
   ident.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 const cssToObject = (str: string) => {
@@ -54,6 +109,7 @@ interface VNode {
     [prop: string]: any;
   };
 }
+
 export function html(
   templates: string | TemplateStringsArray,
   ...expressions: any[]
@@ -61,6 +117,7 @@ export function html(
   const result = __html.call(null, templates, ...expressions);
   let doc = parse(result.value.trim());
   inliner(doc);
+  tw(doc);
 
   const nodeMap = new WeakMap();
   let root: VNode = {
