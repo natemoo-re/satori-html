@@ -9,7 +9,6 @@ import {
 } from "ultrahtml";
 import inlineCSS from "ultrahtml/transformers/inline";
 
-
 const TW_NAMES = new Set([
   /[mp](t|b|r|l|x|y)?-/,
   `color-`,
@@ -51,12 +50,12 @@ const tw = (doc: DoctypeNode) => {
         if (match) break;
         for (const item of classNames) {
           if (match) break;
-          if (item.indexOf(':') > -1) {
-            match = true
-          } else if (typeof name === 'string') {
-            match = item.startsWith(name)
+          if (item.indexOf(":") > -1) {
+            match = true;
+          } else if (typeof name === "string") {
+            match = item.startsWith(name);
           } else {
-            match = name.test(item)
+            match = name.test(item);
           }
         }
       }
@@ -65,7 +64,7 @@ const tw = (doc: DoctypeNode) => {
       }
     }
   });
-}
+};
 const camelize = (ident: string) =>
   ident.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 const cssToObject = (str: string) => {
