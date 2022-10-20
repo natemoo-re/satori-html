@@ -1,5 +1,11 @@
 # satori-html
 
+## 0.3.0
+
+### Minor Changes
+
+- [`ba1ee5e`](https://github.com/natemoo-re/satori-html/commit/ba1ee5e91dd6d8165b35c668b1718921c6950442) - Automatically convert Tailwind classes to the special `tw` prop
+
 ## 0.2.0
 
 ### Minor Changes
