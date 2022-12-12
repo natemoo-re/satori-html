@@ -1,5 +1,11 @@
 # satori-html
 
+## 0.3.2
+
+### Patch Changes
+
+- [`b7eea4c`](https://github.com/natemoo-re/satori-html/commit/b7eea4c25e5fbc597c1631074445ecf6b6a56790) - Update `ultrahtml` and use `stylis` to properly parse styles
+
 ## 0.3.1
 
 ### Patch Changes
