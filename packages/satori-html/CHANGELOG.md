@@ -1,5 +1,13 @@
 # satori-html
 
+## 0.3.1
+
+### Patch Changes
+
+- [`fa940fb`](https://github.com/natemoo-re/satori-html/commit/fa940fb7c31731e5aedc5e343c878cd6e1bb8f1b) - Upgrade `ultrahtml` dependency, fixing <style> inlining behavior
+
+* [`8c20f51`](https://github.com/natemoo-re/satori-html/commit/8c20f51e8fb578c829a343f7400c5b29bdd8c3bc) - Fix `:` being stripped from absolute URLs
+
 ## 0.3.0
 
 ### Minor Changes
