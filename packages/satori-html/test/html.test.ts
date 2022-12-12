@@ -89,4 +89,18 @@ describe("html", () => {
       })
     );
   });
+
+  it("preserves url() in css", async () => {
+    const result = html`<div style="background-image: url(https://example.com/img.png);" />`;
+    expect(result).toEqual(
+      wrap({
+        type: "div",
+        props: {
+          style: { backgroundImage: 'url(https://example.com/img.png)' },
+          children: []
+        },
+      })
+    );
+  });
 });
+

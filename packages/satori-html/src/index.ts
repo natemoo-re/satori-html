@@ -71,7 +71,7 @@ const cssToObject = (str: string) => {
   let obj: Record<string, string> = {};
   let t = 0;
   let pair = ["", ""];
-  let flags: Record<string, number> = {};
+  let flags: Record<string, number> = { "(": 0, ")": 0 };
   for (const c of str) {
     if (!flags["("] && c === ":") {
       t = 1;
@@ -88,7 +88,7 @@ const cssToObject = (str: string) => {
           break;
         }
         case ")": {
-          flags["("]--;
+          flags[c]--;
           break;
         }
       }
