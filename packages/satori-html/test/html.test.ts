@@ -102,5 +102,49 @@ describe("html", () => {
       })
     );
   });
+
+  it("supports linebreaks in style attribute", async () => {
+    const result = html`<div
+  style="
+    background-color: white;
+    height: 100%;
+    width: 100%;
+  "
+>
+  <div
+    style="
+      flex-grow: 1;
+      margin: 80px;
+    "
+  >
+    Hello World! 👋
+  </div>
+</div>`;
+    expect(result).toEqual(
+      wrap({
+        type: "div",
+        props: {
+          children: [
+            undefined,
+            {
+              type: "div",
+              props: {
+                children: "Hello World! 👋",
+                style: {
+                    flexGrow: "1",
+                    margin: "80px",
+                  },
+              }
+            }
+          ],
+          style: {
+            backgroundColor: "white",
+            height: "100%",
+            width: "100%"
+          },
+        },
+      })
+    );
+  })
 });
 
