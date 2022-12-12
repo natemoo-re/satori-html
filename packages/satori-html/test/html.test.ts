@@ -91,13 +91,15 @@ describe("html", () => {
   });
 
   it("preserves url() in css", async () => {
-    const result = html`<div style="background-image: url(https://example.com/img.png);" />`;
+    const result = html`<div
+      style="background-image: url(https://example.com/img.png);"
+    />`;
     expect(result).toEqual(
       wrap({
         type: "div",
         props: {
-          style: { backgroundImage: 'url(https://example.com/img.png)' },
-          children: []
+          style: { backgroundImage: "url(https://example.com/img.png)" },
+          children: [],
         },
       })
     );
@@ -105,21 +107,21 @@ describe("html", () => {
 
   it("supports linebreaks in style attribute", async () => {
     const result = html`<div
-  style="
+      style="
     background-color: white;
     height: 100%;
     width: 100%;
   "
->
-  <div
-    style="
+    >
+      <div
+        style="
       flex-grow: 1;
       margin: 80px;
     "
-  >
-    Hello World! 👋
-  </div>
-</div>`;
+      >
+        Hello World! 👋
+      </div>
+    </div>`;
     expect(result).toEqual(
       wrap({
         type: "div",
@@ -131,20 +133,37 @@ describe("html", () => {
               props: {
                 children: "Hello World! 👋",
                 style: {
-                    flexGrow: "1",
-                    margin: "80px",
-                  },
-              }
-            }
+                  flexGrow: "1",
+                  margin: "80px",
+                },
+              },
+            },
           ],
           style: {
             backgroundColor: "white",
             height: "100%",
-            width: "100%"
+            width: "100%",
           },
         },
       })
     );
-  })
-});
+  });
 
+  it("supports parens in style attribute", async () => {
+    const result = html`<div
+      style="background-image: linear-gradient(135deg, #ef629f, #eecda3); display: flex;"
+    ></div>`;
+    expect(result).toEqual(
+      wrap({
+        type: "div",
+        props: {
+          children: [],
+          style: {
+            backgroundImage: "linear-gradient(135deg, #ef629f, #eecda3)",
+            display: "flex",
+          },
+        },
+      })
+    );
+  });
+});

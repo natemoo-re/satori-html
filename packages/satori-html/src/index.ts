@@ -39,7 +39,7 @@ const TW_NAMES = new Set([
   `tracking-`,
   `z-`,
 ]);
-const inliner = inlineCSS();
+const inliner = inlineCSS({ useObjectSyntax: true });
 const tw = (doc: DoctypeNode) => {
   walkSync(doc, (node) => {
     if (node.type !== ELEMENT_NODE) return;
@@ -67,40 +67,6 @@ const tw = (doc: DoctypeNode) => {
 };
 const camelize = (ident: string) =>
   ident.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
-const cssToObject = (str: string) => {
-  let obj: Record<string, string> = {};
-  let t = 0;
-  let pair = ["", ""];
-  let flags: Record<string, number> = { "(": 0, ")": 0 };
-  for (const c of str) {
-    if (!flags["("] && c === ":") {
-      t = 1;
-    } else if (c === ";") {
-      const [decl = "", value = ""] = pair;
-      obj[camelize(decl.trim())] = value.trim();
-      t = 0;
-      pair = ["", ""];
-    } else {
-      pair[t] += c;
-      switch (c) {
-        case "(": {
-          flags[c]++;
-          break;
-        }
-        case ")": {
-          flags[c]--;
-          break;
-        }
-      }
-    }
-  }
-  const [decl = "", value = ""] = pair;
-  if (decl.trim() && value.trim()) {
-    obj[camelize(decl.trim())] = value.trim();
-  }
-
-  return obj;
-};
 
 interface VNode {
   type: string;
@@ -139,9 +105,12 @@ export function html(
       nodeMap.set(node, root);
     } else if (node.type === ELEMENT_NODE) {
       newNode.type = node.name;
-      const { style, "": _, ...props } = node.attributes;
-      if (typeof style === "string") {
-        props["style"] = cssToObject(style) as any;
+      const { style, "": _, ...props } = node.attributes as any;
+      if (typeof style === "object") {
+        props["style"] = {};
+        for (const [decl, value] of Object.entries(style)) {
+          props["style"][camelize(decl)] = value;
+        }
       }
       props.children = [] as unknown as string;
       Object.assign(newNode, { props });

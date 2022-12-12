@@ -31,7 +31,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ultrahtml": "^1.1.0"
+    "ultrahtml": "^1.2.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.1.0",

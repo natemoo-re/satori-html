@@ -20,11 +20,11 @@ importers:
       jest-image-snapshot: ^5.2.0
       satori: ^0.0.38
       typescript: ^4.8.4
-      ultrahtml: ^1.1.0
+      ultrahtml: ^1.2.0
       vite: ^3.1.7
       vitest: ^0.24.1
     dependencies:
-      ultrahtml: 1.1.0
+      ultrahtml: 1.2.0
     devDependencies:
       '@resvg/resvg-js': 2.1.0
       '@types/node': 18.8.4
@@ -2327,8 +2327,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ultrahtml/1.1.0:
-    resolution: {integrity: sha512-6r1tMBTuzduqCAvqrtPL4WqgHOLYZSVuWhx3gwoLC8M3KILnm8ewe3R65MatMT4/GPCZlZTC1MlPGGM5MV5Hog==}
+  /ultrahtml/1.2.0:
+    resolution: {integrity: sha512-vxZM2yNvajRmCj/SknRYGNXk2tqiy6kRNvZjJLaleG3zJbSh/aNkOqD1/CVzypw8tyHyhpzYuwQgMMhUB4ZVNQ==}
     dev: false
 
   /unbox-primitive/1.0.2:
