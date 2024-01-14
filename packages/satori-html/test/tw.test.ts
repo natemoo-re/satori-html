@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { html } from "../src/index";
+import { html, htmlWithOption } from "../src/index";
 
 describe("tailwind", () => {
   it("picks up margin util", async () => {
@@ -117,5 +117,15 @@ describe("tailwind", () => {
   it(`picks up z-`, () => {
     const result = html`<div class="z-0">Hello world</div>`;
     expect("tw" in result.props.children?.[0].props).toEqual(true);
+  });
+  it("can be disabled", async () => {
+    const result = htmlWithOption({
+      tailwind: false,
+    })`<div class="flex">Hello world</div>`;
+    expect("tw" in result.props.children?.[0].props).toEqual(false);
+  });
+  it("is disabled per default", async () => {
+    const result = htmlWithOption()`<div class="flex">Hello world</div>`;
+    expect("tw" in result.props.children?.[0].props).toEqual(false);
   });
 });
