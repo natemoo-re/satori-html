@@ -77,62 +77,73 @@ interface VNode {
   };
 }
 
-export function html(
-  templates: string | TemplateStringsArray,
-  ...expressions: any[]
-): VNode {
-  const result = __html.call(null, templates, ...expressions);
-  let doc = parse(result.value.trim());
-  inliner(doc);
-  tw(doc);
+export interface SatoriHtmlOptions {
+  tailwind?: boolean;
+}
 
-  const nodeMap = new WeakMap();
-  let root: VNode = {
-    type: "div",
-    props: {
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
+export function htmlWithOption(options?: SatoriHtmlOptions) {
+  return function html(
+    templates: string | TemplateStringsArray,
+    ...expressions: any[]
+  ): VNode {
+    const result = __html.call(null, templates, ...expressions);
+    let doc = parse(result.value.trim());
+    inliner(doc);
+
+    if (options?.tailwind) {
+      tw(doc);
+    }
+
+    const nodeMap = new WeakMap();
+    let root: VNode = {
+      type: "div",
+      props: {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          height: "100%",
+        },
+        children: [],
       },
-      children: [],
-    },
-  };
-  walkSync(doc, (node, parent, index) => {
-    let newNode: any = {};
-    if (node.type === DOCUMENT_NODE) {
-      nodeMap.set(node, root);
-    } else if (node.type === ELEMENT_NODE) {
-      newNode.type = node.name;
-      const { style, "": _, ...props } = node.attributes as any;
-      if (typeof style === "object") {
-        props["style"] = {};
-        for (const [decl, value] of Object.entries(style)) {
-          props["style"][camelize(decl)] = value;
+    };
+    walkSync(doc, (node, parent, index) => {
+      let newNode: any = {};
+      if (node.type === DOCUMENT_NODE) {
+        nodeMap.set(node, root);
+      } else if (node.type === ELEMENT_NODE) {
+        newNode.type = node.name;
+        const { style, "": _, ...props } = node.attributes as any;
+        if (typeof style === "object") {
+          props["style"] = {};
+          for (const [decl, value] of Object.entries(style)) {
+            props["style"][camelize(decl)] = value;
+          }
         }
-      }
-      props.children = [] as unknown as string;
-      Object.assign(newNode, { props });
-      nodeMap.set(node, newNode);
-      if (parent) {
-        const newParent = nodeMap.get(parent);
-        newParent.props.children[index] = newNode;
-      }
-    } else if (node.type === TEXT_NODE) {
-      newNode = node.value.trim();
-      if (newNode.trim()) {
+        props.children = [] as unknown as string;
+        Object.assign(newNode, { props });
+        nodeMap.set(node, newNode);
         if (parent) {
           const newParent = nodeMap.get(parent);
-          if (parent.children.length === 1) {
-            newParent.props.children = newNode;
-          } else {
-            newParent.props.children[index] = newNode;
+          newParent.props.children[index] = newNode;
+        }
+      } else if (node.type === TEXT_NODE) {
+        newNode = node.value.trim();
+        if (newNode.trim()) {
+          if (parent) {
+            const newParent = nodeMap.get(parent);
+            if (parent.children.length === 1) {
+              newParent.props.children = newNode;
+            } else {
+              newParent.props.children[index] = newNode;
+            }
           }
         }
       }
-    }
-  });
+    });
 
-  return root;
+    return root;
+  };
 }
+
+export const html = htmlWithOption({ tailwind: true });

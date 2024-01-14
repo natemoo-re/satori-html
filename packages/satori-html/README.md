@@ -8,12 +8,14 @@ Generate a [satori](https://github.com/vercel/satori)-friendly VDOM from a strin
 
 Unfortunately, it is built on top of React's JSX and [expects "React-elements-like objects"](https://github.com/vercel/satori#use-without-jsx). This library (`satori-html`) bridges that gap, generating the necessary VDOM object from a string of HTML.
 
-> **Note**
+> [!NOTE]
 > Satori supports a limited subset of HTML and CSS features, due to its special use case. Please use inline styles rather than class-based styling!
 
 ## Example
 
 ### API
+
+#### `html`
 
 `satori-html` exports an `html` helper, which transforms HTML strings into an object that is compatible with `satori`.
 
@@ -38,3 +40,26 @@ const tagged = html`<div style="color: ${color};">hello, world</div>`;
 // Function
 const fn = html('<div style="color: black;">hello, world</div>');
 ```
+
+#### `htmlWithOptions`
+
+For more advanced customization `htmlWithOptions` is exposed.
+
+```js
+import { htmlWithOptions } from "satori-html";
+
+// Tagged Template Literal
+const tagged = htmlWithOptions(
+  options
+)`<div class="color-${color}">hello, world</div>`;
+// Function
+const fn = htmlWithOptions(options)(
+  '<div class="color-red">hello, world</div>'
+);
+```
+
+##### Available Options
+
+| Option     | Type      | Default | `html` Configuration |
+| ---------- | --------- | ------- | -------------------- |
+| `tailwind` | `boolean` | `false` | `true`               |
