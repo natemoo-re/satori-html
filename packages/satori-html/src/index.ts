@@ -81,7 +81,11 @@ export function html(
   templates: string | TemplateStringsArray,
   ...expressions: any[]
 ): VNode {
-  const result = __html.call(null, templates, ...expressions);
+  const result = __html.call(
+    null,
+    typeof templates === "string" ? [templates] : templates,
+    ...expressions
+  );
   let doc = parse(result.value.trim());
   inliner(doc);
   tw(doc);
